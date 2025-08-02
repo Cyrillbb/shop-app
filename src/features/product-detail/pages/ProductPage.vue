@@ -98,4 +98,8 @@ const description = computed(() => {
   display: flex;
   gap: var(--gap);
 }
+
+:deep(.product-actions) {
+  align-self: flex-end;
+}
 </style>
