@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="catalog-container">
     <CategoriesList
       :category-id
       @select-category="searchParams.categoryId = String($event ?? '')"
@@ -31,9 +31,7 @@ const categoryId = computed(() => {
 </script>
 
 <style scoped>
-.container {
-  max-width: 1200px;
-
+.catalog-container {
   display: flex;
   gap: 1rem;
 

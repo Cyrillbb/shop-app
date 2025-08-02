@@ -6,7 +6,18 @@
       :alt="product.name"
       class="product-image"
     />
-    <h3>{{ product.name }}</h3>
+
+    <RouterLink
+      :to="{
+        name: 'product',
+        params: {
+          id: product.id,
+        },
+      }"
+    >
+      {{ product.name }}
+    </RouterLink>
+
     <p>Price: ${{ product.price }}</p>
   </div>
 </template>
@@ -24,7 +35,6 @@ defineProps<{
   width: 100%;
 
   padding: 16px;
-  margin: 16px 0;
 
   border: 1px solid #eee;
   border-radius: 8px;

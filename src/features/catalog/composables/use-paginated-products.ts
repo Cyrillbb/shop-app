@@ -11,11 +11,15 @@ export const usePaginatedProducts = (category?: MaybeRefOrGetter<number | undefi
     loadedItems: productsData,
   });
 
+  const isIninitalReq = ref(true);
+
   const { isLoading, execute } = useDataFetch(
     {
       fetchFn: fetchProducts,
       onSuccess: (data) => {
-        productsData.value = [...productsData.value, ...data.items];
+        productsData.value = isIninitalReq.value
+          ? data.items
+          : [...productsData.value, ...data.items];
 
         total.value = data.total;
       },
@@ -36,7 +40,7 @@ export const usePaginatedProducts = (category?: MaybeRefOrGetter<number | undefi
   };
 
   const resetPagination = () => {
-    productsData.value = [];
+    isIninitalReq.value = true;
 
     reset();
 

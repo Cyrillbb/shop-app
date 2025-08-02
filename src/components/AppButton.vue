@@ -1,12 +1,20 @@
 <template>
-  <button class="app-button" :class="{ disabled }" :disabled>
+  <button
+    class="app-button"
+    :class="{
+      disabled,
+      [type]: type,
+    }"
+    :disabled
+  >
     <slot />
   </button>
 </template>
 
 <script setup lang="ts">
-defineProps<{
+const { type = 'primary' } = defineProps<{
   disabled?: boolean;
+  type?: 'primary' | 'text' | 'danger';
 }>();
 </script>
 
@@ -18,11 +26,27 @@ defineProps<{
   border: none;
   border-radius: 5px;
 
-  background-color: #5e81ac;
   color: white;
   cursor: pointer;
 
   transition: all 0.3s ease;
+}
+
+.app-button.primary {
+  background-color: #5e81ac;
+  color: white;
+}
+
+.app-button.danger {
+  background-color: #bf616a;
+  color: white;
+}
+
+.text {
+  background-color: #5e81ac1d;
+
+  color: black;
+  border: 1px solid #5e81ac;
 }
 
 .app-button.disabled {

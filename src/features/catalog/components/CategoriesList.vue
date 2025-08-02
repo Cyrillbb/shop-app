@@ -1,16 +1,21 @@
 <template>
   <div class="categories">
-    <div>categories</div>
-
     <div :class="{ selected: !categoryId }" class="category" @click="handleSelectCategory()">
       All products
     </div>
 
-    <AppButton v-if="categoryId" class="back-button" @click="handleSelectCategory(data?.parentId)">
-      {{ '<' }}
-    </AppButton>
+    <div v-if="data?.name">
+      current category: <b>{{ data?.name || 'None' }}</b>
+    </div>
 
-    <div v-if="data?.name">current category: {{ data?.name || 'None' }}</div>
+    <AppButton
+      v-if="categoryId"
+      type="text"
+      class="back-btn"
+      @click="handleSelectCategory(data?.parentId)"
+    >
+      <ChevronLeft /> Back
+    </AppButton>
 
     <div
       v-for="category in displayCategories"
@@ -19,7 +24,6 @@
       :class="{ selected: category.id === categoryId }"
       @click="handleSelectCategory(category.id)"
     >
-      {{ category.id }}
       <div>{{ category.name }}</div>
     </div>
 
@@ -35,6 +39,7 @@ import { usePaginatedCategories } from '../composables/use-paginated-categories'
 import AppButton from '@/components/AppButton.vue';
 import { useDataFetch } from '@/composables/use-data-fetch';
 import { fetchCategory } from '../api';
+import ChevronLeft from '@/assets/icons/chevron-left.svg';
 
 const { categoryId } = defineProps<{
   categoryId?: number;
@@ -93,6 +98,8 @@ const handleSelectCategory = (categoryId?: number | undefined) => {
 
 <style scoped>
 .categories {
+  width: 15%;
+
   display: flex;
   flex-direction: column;
 
@@ -100,17 +107,25 @@ const handleSelectCategory = (categoryId?: number | undefined) => {
 }
 
 .category {
-  padding: 0.5rem;
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 0.25rem;
   cursor: pointer;
+
+  color: #2e3440;
 
   transition: background-color 0.3s ease;
 }
 
-.selected {
-  background-color: #007bff;
-  color: white;
+.category:hover {
+  text-decoration: underline;
+}
+
+.category.selected {
+  color: #5e81ac;
+}
+
+.back-btn {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
 }
 </style>

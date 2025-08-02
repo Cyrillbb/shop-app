@@ -1,6 +1,11 @@
 <template>
   <div class="products">
-    <ProductCard v-for="product in productsData" :key="product.id" :product="product" />
+    <ProductCard
+      v-for="product in productsData"
+      :key="product.id"
+      :product
+      :class="{ loading: isLoading }"
+    />
 
     <AppButton v-if="hasNext" :disabled="isLoading" class="load-more" @click="loadMore">
       {{ isLoading ? 'Loading...' : 'Load More' }}
@@ -37,5 +42,10 @@ watch(
   flex-direction: column;
 
   gap: 1rem;
+}
+
+.loading {
+  opacity: 0.5;
+  filter: blur(2px);
 }
 </style>
