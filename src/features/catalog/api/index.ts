@@ -15,7 +15,7 @@ export const fetchProducts = async (params: ProductRequestParams) => {
   return resp.data;
 };
 
-export const fetchCategories = async (params?: CategoryRequestParams) => {
+export const fetchCategories = async (params: CategoryRequestParams) => {
   const resp = await apiClient.get<PaginatedCategoriesResponse>('categories', {
     params,
   });

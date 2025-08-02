@@ -35,11 +35,11 @@
 
 <script setup lang="ts">
 import { computed, watch } from 'vue';
-import { usePaginatedCategories } from '../composables/use-paginated-categories';
 import AppButton from '@/components/AppButton.vue';
 import { useDataFetch } from '@/composables/use-data-fetch';
-import { fetchCategory } from '../api';
+import { fetchCategories, fetchCategory } from '../api';
 import ChevronLeft from '@/assets/icons/chevron-left.svg';
+import { usePaginatedFetch } from '@/composables/use-paginated-fetch';
 
 const { categoryId } = defineProps<{
   categoryId?: number;
@@ -73,12 +73,17 @@ watch(
   },
 );
 
-const { isLoading, categoriesData, hasNext, loadMore } = usePaginatedCategories(() => ({
-  parent: data.value?.id,
-}));
+const { entities, isLoading, hasNext, loadMore } = usePaginatedFetch(
+  {
+    fetchFn: fetchCategories,
+  },
+  () => ({
+    parent: data.value?.id,
+  }),
+);
 
 const displayCategories = computed(() =>
-  categoriesData.value?.filter((category) => {
+  entities.value?.filter((category) => {
     if (isChild.value) {
       return category.parentId === data.value?.parentId;
     }

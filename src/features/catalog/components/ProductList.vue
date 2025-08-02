@@ -1,7 +1,7 @@
 <template>
   <div class="products">
     <ProductCard
-      v-for="product in productsData"
+      v-for="product in entities"
       :key="product.id"
       :product
       :class="{ loading: isLoading }"
@@ -17,14 +17,20 @@
 import { watch } from 'vue';
 import AppButton from '@/components/AppButton.vue';
 import ProductCard from './ProductListCard.vue';
-import { usePaginatedProducts } from '../composables/use-paginated-products';
+import { usePaginatedFetch } from '@/composables/use-paginated-fetch';
+import { fetchProducts } from '../api';
 
 const { categoryId } = defineProps<{
   categoryId?: number;
 }>();
 
-const { isLoading, productsData, hasNext, loadMore, resetPagination } = usePaginatedProducts(
-  () => categoryId,
+const { entities, hasNext, isLoading, loadMore, resetPagination } = usePaginatedFetch(
+  {
+    fetchFn: fetchProducts,
+  },
+  () => ({
+    category: categoryId,
+  }),
 );
 
 watch(

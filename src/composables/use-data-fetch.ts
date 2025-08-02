@@ -4,6 +4,7 @@ import { ref, toValue, type MaybeRefOrGetter } from 'vue';
 // and doesn't allow using custom fetch functions or clients easily
 // this way it's easier to define api layer with simple async functions and then use them in composables if needed
 // and vueQuery is too complex for simple use cases such as this assignment
+// if vueuse had something like useAsyncData from nuxt i would have used it :((
 export const useDataFetch = <T, U extends unknown[]>(
   {
     fetchFn,

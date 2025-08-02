@@ -18,6 +18,7 @@
       >
         {{ product.name }}
       </RouterLink>
+
       <AppProductActions :productId="product.id" :price="product.price" />
     </div>
   </div>
@@ -48,11 +49,6 @@ defineProps<{
 
 .product-card:hover {
   box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.1);
-}
-
-:deep(.product-actions) {
-  /* height: max-content;
-  align-self: end; */
 }
 
 .product-info-row {
