@@ -1,31 +1,41 @@
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from '@/constants';
-import { ref } from 'vue';
+import { computed, ref, type Ref } from 'vue';
+import { DEFAULT_OFFSET, DEFAULT_LIMIT } from '@/constants';
 
-export const usePagination = () => {
-  const paginationParams = ref({
-    limit: DEFAULT_LIMIT,
-    offset: DEFAULT_OFFSET,
+export const usePagination = ({
+  limit = DEFAULT_LIMIT,
+  offset = DEFAULT_OFFSET,
+  loadedItems,
+}: {
+  limit?: number;
+  offset?: number;
+  loadedItems: Ref<unknown[]>;
+}) => {
+  const total = ref(0);
+
+  const paginationPayload = ref({
+    limit,
+    offset,
   });
 
-  const hasNextPage = ref(true);
+  const hasNext = computed(() => {
+    return loadedItems.value.length < total.value;
+  });
 
-  const incrementPage = (totalItems: number) => {
-    if (!hasNextPage.value) return;
+  const incrementPage = () => {
+    if (!hasNext.value) return;
 
-    paginationParams.value.offset += paginationParams.value.limit;
-    hasNextPage.value = paginationParams.value.offset < totalItems;
+    paginationPayload.value.offset += paginationPayload.value.limit;
   };
 
-  const resetPagination = () => {
-    paginationParams.value.offset = DEFAULT_OFFSET;
-
-    hasNextPage.value = true;
+  const reset = () => {
+    paginationPayload.value.offset = DEFAULT_OFFSET;
   };
 
   return {
-    paginationParams,
-    hasNextPage,
+    paginationPayload,
+    hasNext,
+    total,
     incrementPage,
-    resetPagination,
+    reset,
   };
 };

@@ -6,12 +6,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      redirect: '/products',
+      redirect: '/catalog',
     },
     {
-      path: '/products',
-      name: 'products',
-      component: () => import('../views/ProductsView.vue'),
+      path: '/catalog',
+      name: 'catalog',
+      component: () => import('@/features/catalog').then((val) => val.ProductsView),
     },
   ],
 });

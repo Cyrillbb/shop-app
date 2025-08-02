@@ -1,8 +1,14 @@
 <template>
-  <button class="app-button">
+  <button class="app-button" :class="{ disabled }" :disabled>
     <slot />
   </button>
 </template>
+
+<script setup lang="ts">
+defineProps<{
+  disabled?: boolean;
+}>();
+</script>
 
 <style scoped>
 .app-button {
@@ -17,6 +23,11 @@
   cursor: pointer;
 
   transition: all 0.3s ease;
+}
+
+.app-button.disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
 }
 
 .app-button:hover {
