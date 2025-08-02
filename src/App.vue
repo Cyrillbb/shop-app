@@ -17,6 +17,8 @@ import AppToast from './components/AppToast.vue';
 <style scoped>
 .container {
   max-width: 1200px;
+
   margin: 0 auto;
+  padding-top: 12px;
 }
 </style>
