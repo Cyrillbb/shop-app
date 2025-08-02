@@ -48,13 +48,13 @@ watch(
 
   text-align: center;
 
-  background: #bf616a;
+  background-color: var(--error-color);
 }
 
 .count {
   position: absolute;
 
-  color: #eceff4;
+  color: var(--background-color);
 }
 
 .slide-fade-leave-active,

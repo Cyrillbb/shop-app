@@ -14,7 +14,7 @@
 <script setup lang="ts">
 const { type = 'primary' } = defineProps<{
   disabled?: boolean;
-  type?: 'primary' | 'text' | 'danger';
+  type?: 'primary' | 'text' | 'danger' | 'success';
 }>();
 </script>
 
@@ -22,39 +22,49 @@ const { type = 'primary' } = defineProps<{
 .app-button {
   width: 100%;
 
-  padding: 10px 20px;
+  padding: 12px 20px;
   border: none;
   border-radius: 5px;
 
-  color: white;
+  color: var(--background-color);
   cursor: pointer;
 
   transition: all 0.3s ease;
 }
 
-.app-button.primary {
-  background-color: #5e81ac;
-  color: white;
+.app-button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.app-button.danger {
-  background-color: #bf616a;
-  color: white;
+.primary {
+  background-color: var(--primary-color);
+}
+
+.danger {
+  background-color: var(--error-color);
+}
+
+.success {
+  color: #eceff4;
+
+  background-color: var(--success-color);
 }
 
 .text {
-  background-color: #5e81ac1d;
+  background-color: transparent;
 
-  color: black;
-  border: 1px solid #5e81ac;
+  padding: 0;
+
+  color: var(--dark-text-color);
+  border: none;
 }
 
-.app-button.disabled {
-  background-color: #d3d3d3;
+.text:hover {
+  box-shadow: none;
+}
+
+.disabled {
+  background-color: var(--disabled-color);
   cursor: not-allowed;
-}
-
-.app-button:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 </style>

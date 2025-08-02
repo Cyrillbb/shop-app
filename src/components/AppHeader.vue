@@ -32,8 +32,7 @@ const { cartProducts } = storeToRefs(useCartStore());
   justify-content: space-between;
 
   padding: 1rem 2rem;
-  background-color: #2e3440;
-  color: #fff;
+  background-color: var(--dark-background-color);
 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
@@ -47,7 +46,7 @@ const { cartProducts } = storeToRefs(useCartStore());
   display: flex;
   align-items: center;
 
-  color: #5e81ac;
+  color: var(--primary-color);
 }
 
 .cart-icon {

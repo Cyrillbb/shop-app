@@ -1,13 +1,12 @@
 <template>
   <div class="product-card">
+    <img
+      v-if="product.imageUrl"
+      :src="product.imageUrl"
+      :alt="product.name"
+      class="product-image"
+    />
     <div class="product-info-row">
-      <img
-        v-if="product.imageUrl"
-        :src="product.imageUrl"
-        :alt="product.name"
-        class="product-image"
-      />
-
       <RouterLink
         :to="{
           name: 'product',
@@ -37,14 +36,17 @@ defineProps<{
 .product-card {
   width: 100%;
 
+  display: flex;
+
+  gap: var(--gap);
+
   padding: 16px;
 
-  box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
 
-  border: 1px solid #eee;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
 
-  transition: all 0.3s ease-in-out;
+  transition: var(--transition);
 }
 
 .product-card:hover {
@@ -52,9 +54,17 @@ defineProps<{
 }
 
 .product-info-row {
-  display: flex;
+  width: 100%;
 
-  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  gap: var(--gap);
+}
+
+:deep(.product-actions) {
+  margin-left: auto;
 }
 
 .product-image {

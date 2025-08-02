@@ -57,22 +57,27 @@ const description = computed(() => {
   display: flex;
   flex-direction: column;
 
-  gap: 16px;
+  gap: var(--gap);
 
   margin: 0 auto;
   padding: 16px;
 
-  border: 1px solid #eee;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
 
-  transition: all 0.3s ease-in-out;
+  box-shadow: var(--box-shadow);
+
+  transition: var(--transition);
+}
+
+.product-detail-card:hover {
+  box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.1);
 }
 
 .product-name {
   width: 100%;
 
   font-size: 24px;
-  color: #2e3440;
+  color: var(--text-color);
   font-weight: bold;
 }
 
@@ -91,6 +96,6 @@ const description = computed(() => {
   width: 100%;
 
   display: flex;
-  gap: 16px;
+  gap: var(--gap);
 }
 </style>

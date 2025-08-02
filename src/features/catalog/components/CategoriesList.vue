@@ -4,10 +4,6 @@
       All products
     </div>
 
-    <div v-if="data?.name">
-      current category: <b>{{ data?.name || 'None' }}</b>
-    </div>
-
     <AppButton
       v-if="categoryId"
       type="text"
@@ -16,6 +12,10 @@
     >
       <ChevronLeft /> Back
     </AppButton>
+
+    <div v-if="data?.name && !isChild" class="category selected">
+      {{ data?.name || 'None' }}
+    </div>
 
     <div
       v-for="category in displayCategories"
@@ -82,6 +82,11 @@ const { entities, isLoading, hasNext, loadMore } = usePaginatedFetch(
   }),
 );
 
+// sooo, it seems like api for categories (/{storeId}/categories) ignores 'withSubcategories' field
+// im not sure if its a bug or maybe im doing something wrong
+// it also means that pagination is not working properly :(
+// because if i provide withSubcategories: false it still returns subcategories :(
+// so a lot of this code could be removed
 const displayCategories = computed(() =>
   entities.value?.filter((category) => {
     if (isChild.value) {
@@ -114,7 +119,7 @@ const handleSelectCategory = (categoryId?: number | undefined) => {
 .category {
   cursor: pointer;
 
-  color: #2e3440;
+  color: var(--text-color);
 
   transition: background-color 0.3s ease;
 }
@@ -124,13 +129,13 @@ const handleSelectCategory = (categoryId?: number | undefined) => {
 }
 
 .category.selected {
-  color: #5e81ac;
+  color: var(--primary-color);
 }
 
 .back-btn {
   display: flex;
 
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 </style>

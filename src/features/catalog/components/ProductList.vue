@@ -52,6 +52,6 @@ watch(
 
 .loading {
   opacity: 0.5;
-  filter: blur(2px);
+  filter: blur(4px);
 }
 </style>

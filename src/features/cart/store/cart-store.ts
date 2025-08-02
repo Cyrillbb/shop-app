@@ -20,9 +20,14 @@ export const useCartStore = defineStore('product-cart', () => {
 
   const getProductQuantity = (productId: number) => cartProducts.value.get(productId) ?? 0;
 
+  const clearCart = () => {
+    cartProducts.value.clear();
+  };
+
   return {
     cartProducts,
     setProductQuantity,
     getProductQuantity,
+    clearCart,
   };
 });

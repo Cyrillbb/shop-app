@@ -20,14 +20,11 @@ const {} = defineProps<{
   width: max-content;
 
   height: max-content;
-  align-self: end;
 
   display: flex;
   align-items: center;
 
-  gap: 16px;
-
-  margin-left: auto;
+  gap: var(--gap);
 }
 
 .product-price {
