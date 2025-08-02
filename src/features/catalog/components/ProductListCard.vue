@@ -1,28 +1,30 @@
 <template>
   <div class="product-card">
-    <img
-      v-if="product.imageUrl"
-      :src="product.imageUrl"
-      :alt="product.name"
-      class="product-image"
-    />
+    <div class="product-info-row">
+      <img
+        v-if="product.imageUrl"
+        :src="product.imageUrl"
+        :alt="product.name"
+        class="product-image"
+      />
 
-    <RouterLink
-      :to="{
-        name: 'product',
-        params: {
-          id: product.id,
-        },
-      }"
-    >
-      {{ product.name }}
-    </RouterLink>
-
-    <p>Price: ${{ product.price }}</p>
+      <RouterLink
+        :to="{
+          name: 'product',
+          params: {
+            id: product.id,
+          },
+        }"
+      >
+        {{ product.name }}
+      </RouterLink>
+      <AppProductActions :productId="product.id" :price="product.price" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import AppProductActions from '@/components/AppProductActions.vue';
 import type { Product } from '../types';
 
 defineProps<{
@@ -36,6 +38,8 @@ defineProps<{
 
   padding: 16px;
 
+  box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.1);
+
   border: 1px solid #eee;
   border-radius: 8px;
 
@@ -43,7 +47,18 @@ defineProps<{
 }
 
 .product-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.1);
+}
+
+:deep(.product-actions) {
+  /* height: max-content;
+  align-self: end; */
+}
+
+.product-info-row {
+  display: flex;
+
+  gap: 16px;
 }
 
 .product-image {

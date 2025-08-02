@@ -19,6 +19,12 @@ const router = createRouter({
       props: true,
       component: () => import('@/features/product-detail').then((val) => val.ProductPage),
     },
+
+    {
+      name: 'cart',
+      path: '/cart',
+      component: () => import('@/features/cart').then((val) => val.CartPage),
+    },
   ],
 });
 

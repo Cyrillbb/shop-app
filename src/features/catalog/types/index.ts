@@ -12,6 +12,7 @@ export type PaginatedProductsResponse = PaginatedResponse<Product>;
 
 export type ProductRequestParams = {
   category?: number;
+  productId?: string;
 } & PaginationRequestParams;
 
 export type Category = {

@@ -4,9 +4,9 @@
   </AppButton>
 
   <div v-else class="product-counter">
-    <AppButton type="danger" @click="setProductQuantity(productId, currentQuantity - 1)"
-      >-</AppButton
-    >
+    <AppButton type="danger" @click="setProductQuantity(productId, currentQuantity - 1)">
+      -
+    </AppButton>
 
     {{ currentQuantity }}
 
@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useCartStore } from '@/store/cart-store';
+import { useCartStore } from '@/features/cart';
 import AppButton from './AppButton.vue';
 
 const { productId } = defineProps<{

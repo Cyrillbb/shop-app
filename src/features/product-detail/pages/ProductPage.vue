@@ -17,11 +17,7 @@
       <div v-html="description" class="produc-desc" />
     </div>
 
-    <div class="product-actions">
-      <span class="product-price">Price: {{ data.price }} $</span>
-
-      <AppAddToCart class="product-add-to-cart" :productId="data.id" />
-    </div>
+    <AppProductActions :productId="data.id" :price="data.price" />
   </div>
 </template>
 
@@ -31,7 +27,7 @@ import { useDataFetch } from '@/composables/use-data-fetch';
 import { fetchProductDetail } from '../api';
 import { computed } from 'vue';
 import AppError from '@/components/AppError.vue';
-import AppAddToCart from '@/components/AppAddToCart.vue';
+import AppProductActions from '@/components/AppProductActions.vue';
 
 const { id } = defineProps<{
   id: string;
@@ -85,7 +81,7 @@ const description = computed(() => {
 
   width: 100%;
   max-width: 300px;
-  height: auto;
+  height: 450px;
 
   border-radius: 6px;
   object-fit: cover;
@@ -96,26 +92,5 @@ const description = computed(() => {
 
   display: flex;
   gap: 16px;
-}
-
-.product-actions {
-  width: max-content;
-
-  display: flex;
-  align-items: center;
-
-  gap: 16px;
-
-  margin-left: auto;
-}
-
-.product-price {
-  width: max-content;
-
-  white-space: nowrap;
-}
-
-.product-add-to-cart {
-  width: 120px;
 }
 </style>
