@@ -19,14 +19,20 @@ import AppButton from '@/components/AppButton.vue';
 import ProductCard from './ProductListCard.vue';
 import { usePaginatedFetch } from '@/composables/use-paginated-fetch';
 import { fetchProducts } from '../api';
+import { useToastStore } from '@/store/toast-store';
 
 const { categoryId } = defineProps<{
   categoryId?: number;
 }>();
 
+const { addMessage } = useToastStore();
+
 const { entities, hasNext, isLoading, loadMore, resetPagination } = usePaginatedFetch(
   {
     fetchFn: fetchProducts,
+    onError: () => {
+      addMessage('Something went wrong while fetching products');
+    },
   },
   () => ({
     category: categoryId,

@@ -30,18 +30,23 @@ import { computed, ref, watch } from 'vue';
 import CartActions from '../components/CartActions.vue';
 import CartSuccess from '../components/CartSuccess.vue';
 import AppMessage from '@/components/AppMessage.vue';
+import { useToastStore } from '@/store/toast-store';
 
 const cartStore = useCartStore();
 
 const { cartProducts } = storeToRefs(cartStore);
-
 const { getProductQuantity, clearCart } = cartStore;
+
+const { addMessage } = useToastStore();
 
 const productsCount = computed(() => cartProducts.value.size);
 
 const { data, isLoading, execute } = useDataFetch(
   {
     fetchFn: fetchProducts,
+    onError: () => {
+      addMessage('Something went wrong while fetching cart');
+    },
   },
   () => ({
     productId: [...cartProducts.value.keys()].join(','),

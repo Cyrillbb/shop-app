@@ -45,6 +45,10 @@ import { fetchCategories, fetchCategory } from '../api';
 import ChevronLeft from '@/assets/icons/chevron-left.svg';
 import { usePaginatedFetch } from '@/composables/use-paginated-fetch';
 import AppMessage from '@/components/AppMessage.vue';
+import { isAxiosError } from 'axios';
+import { useRouter } from 'vue-router';
+import { STATUS_CODES } from '@/constants';
+import { useToastStore } from '@/store/toast-store';
 
 const { categoryId } = defineProps<{
   categoryId?: number;
@@ -54,6 +58,10 @@ const emit = defineEmits<{
   (e: 'select-category', categoryId: number | undefined): void;
 }>();
 
+const router = useRouter();
+
+const { addMessage } = useToastStore();
+
 const {
   data,
   isLoading: isLoadingDetail,
@@ -61,6 +69,15 @@ const {
 } = useDataFetch(
   {
     fetchFn: fetchCategory,
+    onError: (err) => {
+      if (isAxiosError(err) && err.response?.status === STATUS_CODES.NOT_FOUND) {
+        router.push({
+          name: 'NotFound',
+        });
+      }
+
+      addMessage('Something went wrong while fetching category');
+    },
   },
   () => categoryId,
 );
@@ -90,6 +107,9 @@ const {
 } = usePaginatedFetch(
   {
     fetchFn: fetchCategories,
+    onError: () => {
+      addMessage('Something went wrong while fetching categories list');
+    },
   },
   () => ({
     parent: data.value?.id,

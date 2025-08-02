@@ -6,12 +6,14 @@ import { computed, ref, toValue, type MaybeRefOrGetter } from 'vue';
 export const usePaginatedFetch = <T, U extends PaginationRequestParams>(
   {
     fetchFn,
+    onError,
     limit = DEFAULT_LIMIT,
     offset = DEFAULT_OFFSET,
   }: {
     fetchFn: (payload: U) => Promise<PaginatedResponse<T>>;
     limit?: number;
     offset?: number;
+    onError?: (err: unknown) => void;
   },
   payload: MaybeRefOrGetter<U>,
 ) => {
@@ -51,6 +53,7 @@ export const usePaginatedFetch = <T, U extends PaginationRequestParams>(
 
         isIninitalReq.value = false;
       },
+      onError,
       immediate: true,
     },
     () => ({

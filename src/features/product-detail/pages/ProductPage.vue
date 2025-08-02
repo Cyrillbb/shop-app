@@ -28,14 +28,20 @@ import { fetchProductDetail } from '../api';
 import { computed } from 'vue';
 import AppError from '@/components/AppError.vue';
 import AppProductActions from '@/components/AppProductActions.vue';
+import { useToastStore } from '@/store/toast-store';
 
 const { id } = defineProps<{
   id: string;
 }>();
 
+const { addMessage } = useToastStore();
+
 const { data, isLoading, isError } = useDataFetch(
   {
     fetchFn: fetchProductDetail,
+    onError: () => {
+      addMessage('Something went wrong while fetching product');
+    },
     immediate: true,
   },
   () => Number(id),
