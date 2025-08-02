@@ -13,21 +13,25 @@
       <ChevronLeft /> Back
     </AppButton>
 
-    <div v-if="data?.name && !isChild" class="category selected">
-      {{ data?.name || 'None' }}
-    </div>
+    <template v-if="!isLoading">
+      <div v-if="data?.name && !isChild" class="category selected">
+        {{ data?.name || 'None' }}
+      </div>
 
-    <div
-      v-for="category in displayCategories"
-      :key="category.id"
-      class="category"
-      :class="{ selected: category.id === categoryId }"
-      @click="handleSelectCategory(category.id)"
-    >
-      <div>{{ category.name }}</div>
-    </div>
+      <div
+        v-for="category in displayCategories"
+        :key="category.id"
+        class="category"
+        :class="{ selected: category.id === categoryId }"
+        @click="handleSelectCategory(category.id)"
+      >
+        <div>{{ category.name }}</div>
+      </div>
+    </template>
 
-    <AppButton v-if="hasNext" class="load-more" @click="loadMore" :loading="isLoading">
+    <AppMessage v-if="isLoading" type="info" small>...loading</AppMessage>
+
+    <AppButton v-if="hasNext" class="load-more" :disabled="isLoading" @click="loadMore">
       {{ isLoading ? 'Loading...' : 'Load more' }}
     </AppButton>
   </div>
@@ -40,6 +44,7 @@ import { useDataFetch } from '@/composables/use-data-fetch';
 import { fetchCategories, fetchCategory } from '../api';
 import ChevronLeft from '@/assets/icons/chevron-left.svg';
 import { usePaginatedFetch } from '@/composables/use-paginated-fetch';
+import AppMessage from '@/components/AppMessage.vue';
 
 const { categoryId } = defineProps<{
   categoryId?: number;
@@ -49,7 +54,11 @@ const emit = defineEmits<{
   (e: 'select-category', categoryId: number | undefined): void;
 }>();
 
-const { data, execute } = useDataFetch(
+const {
+  data,
+  isLoading: isLoadingDetail,
+  execute,
+} = useDataFetch(
   {
     fetchFn: fetchCategory,
   },
@@ -73,7 +82,12 @@ watch(
   },
 );
 
-const { entities, isLoading, hasNext, loadMore } = usePaginatedFetch(
+const {
+  entities,
+  isLoading: isLoadingList,
+  hasNext,
+  loadMore,
+} = usePaginatedFetch(
   {
     fetchFn: fetchCategories,
   },
@@ -81,6 +95,8 @@ const { entities, isLoading, hasNext, loadMore } = usePaginatedFetch(
     parent: data.value?.id,
   }),
 );
+
+const isLoading = computed(() => isLoadingDetail.value || isLoadingList.value);
 
 // sooo, it seems like api for categories (/{storeId}/categories) ignores 'withSubcategories' field
 // im not sure if its a bug or maybe im doing something wrong

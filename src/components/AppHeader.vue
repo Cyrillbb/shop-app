@@ -8,8 +8,6 @@
       <router-link to="/cart" class="cart-link">
         <IconCart class="cart-icon" />
 
-        <!-- <span v-if="cartProducts.size" class="cart-count"> ({{ cartProducts.size }}) </span> -->
-
         <AppCartCounter :count="cartProducts.size" />
       </router-link>
     </div>
@@ -27,6 +25,8 @@ const { cartProducts } = storeToRefs(useCartStore());
 
 <style scoped>
 .app-header {
+  height: 60px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;

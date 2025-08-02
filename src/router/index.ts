@@ -1,3 +1,4 @@
+import NotFound from '@/components/NotFound.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -24,6 +25,12 @@ const router = createRouter({
       name: 'cart',
       path: '/cart',
       component: () => import('@/features/cart').then((val) => val.CartPage),
+    },
+
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: NotFound,
     },
   ],
 });

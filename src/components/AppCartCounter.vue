@@ -59,7 +59,7 @@ watch(
 
 .slide-fade-leave-active,
 .slide-fade-enter-active {
-  transition: 0.3s;
+  transition: 0.2s;
 }
 .slide-fade-enter {
   transform: translateY(-100%);
